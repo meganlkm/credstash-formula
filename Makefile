@@ -10,10 +10,6 @@ define docker_build
 	docker build --force-rm -t $(FORMULA_NAME):salt-testing-$(1) -f Dockerfile.$(1) .
 endef
 
-define docker_run_local
-	docker run --rm -v $(PWD):/opt/$(FORMULA_NAME)-formula --env=STAGE=TEST -h salt-testing-$(1) --name salt-testing-$(1) -it $(FORMULA_NAME):salt-testing-$(1) /bin/bash
-endef
-
 define run_tests
 	./tools/run-tests.sh $(FORMULA_NAME) $(1)
 endef
@@ -27,8 +23,15 @@ define run_local_tests
 	$(call build_thing,$(1)) && $(call run_tests,$(1))
 endef
 
-define run_local
-	$(call build_thing,$(1)) && $(call docker_run_local,$(1))
+define run_sandbox
+	docker pull simplyadrian/allsalt:$(1)
+	docker run --rm -d \
+		-v ${PWD}/credstash:/srv/salt/credstash \
+		-v ${PWD}:/opt/credstash-formula \
+		-h sandbox-salt-master-$(1) \
+		--name sandbox-salt-master-$(1) \
+		simplyadrian/allsalt:$(1)
+	# docker exec -it sandbox-salt-master-$(1) bash
 endef
 
 
@@ -50,44 +53,34 @@ clean:
 	# rm -rf .dependencies
 	# rm -rf salt/_modules
 
-sandbox: clean
-	docker pull simplyadrian/allsalt:debian_master_2017.7.2
-	docker run --rm -d \
-		-v ${PWD}/credstash:/srv/salt/credstash \
-		-v ${PWD}:/opt/credstash-formula \
-		-h sandbox-salt-master \
-		--name sandbox-salt-master \
-		simplyadrian/allsalt:debian_master_2017.7.2
-	# docker exec -it sandbox-salt-master bash
-
 
 # --- centos_master_2017.7.2 ------------------------------------
 test-centos_master_2017.7.2: clean
 	$(call run_local_tests,centos_master_2017.7.2)
 
 local-centos_master_2017.7.2: clean
-	$(call run_local,centos_master_2017.7.2)
+	$(call run_sandbox,centos_master_2017.7.2)
 
 # --- debian_master_2017.7.2 ------------------------------------
 test-debian_master_2017.7.2: clean
 	$(call run_local_tests,debian_master_2017.7.2)
 
 local-debian_master_2017.7.2: clean
-	$(call run_local,debian_master_2017.7.2)
+	$(call run_sandbox,debian_master_2017.7.2)
 
 # --- ubuntu_master_2017.7.2 ------------------------------------
 test-ubuntu_master_2017.7.2: clean
 	$(call run_local_tests,ubuntu_master_2017.7.2)
 
 local-ubuntu_master_2017.7.2: clean
-	$(call run_local,ubuntu_master_2017.7.2)
+	$(call run_sandbox,ubuntu_master_2017.7.2)
 
 # --- ubuntu_master_2016.11.3 ------------------------------------
 test-ubuntu_master_2016.11.3: clean
 	$(call run_local_tests,ubuntu_master_2016.11.3)
 
 local-ubuntu_master_2016.11.3: clean
-	$(call run_local,ubuntu_master_2016.11.3)
+	$(call run_sandbox,ubuntu_master_2016.11.3)
 
 
 # --- legacy ----------------------------------------------------

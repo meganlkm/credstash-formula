@@ -8,8 +8,6 @@ Debian:
 
 RedHat:
   packages:
-    - build-essential
-    - libssl-dev
-    - libffi-dev
-    - python-dev
-    - python-pip
+    - openssl-devel
+    - libffi-devel
+    - python-devel
