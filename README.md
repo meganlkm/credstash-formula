@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/intuitivetechnologygroup/credstash-formula.svg?branch=master)](https://travis-ci.org/intuitivetechnologygroup/credstash-formula)
-
 # Credstash Formula
 
 Formulas to set up and manage credstash.
