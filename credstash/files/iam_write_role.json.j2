@@ -1,0 +1,38 @@
+{
+    "role_name": "{{ iam_write["role_name"] }}",
+    "description": "Role used to write credstash secrets",
+    "assume_role_policy_document": {
+        "Version": "2012-10-17",
+        "Statement": {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::{{ account_id }}:root",
+                "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    },
+    "attach_policy_name": "{{ iam_write["policy_name"] }}",
+    "attach_policy_description": "Policy used to write credstash secrets",
+    "attach_policy_document": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Action": [
+                    "kms:GenerateDataKey"
+                ],
+                "Effect": "Allow",
+                "Resource": "lookup:kms:alias/{{ kms_alias }}"
+            },
+            {
+                "Action": [
+                    "dynamodb:PutItem",
+                    "dynamodb:Query"
+                ],
+                "Effect": "Allow",
+                "Resource": "arn:aws:dynamodb:{{ region }}:{{ account_id }}:table/{{ table_name }}"
+            }
+        ]
+    },
+    "region": "{{ region }}"
+}

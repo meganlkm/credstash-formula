@@ -2,8 +2,16 @@
 aws:
   region: us-east-2
   account_id: ''
+
 credstash:
   table_name: credential-store
+  kms_alias: credstash
   iam_setup:
     policy_name: credstash-setup-policy
     role_name: credstash-setup-role
+  iam_write:
+    policy_name: credstash-write-policy
+    role_name: credstash-write-role
+  iam_read:
+    policy_name: credstash-read-policy
+    role_name: credstash-read-role
