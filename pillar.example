@@ -1,4 +1,3 @@
-# Default lookup dictionary
 aws:
   region: us-east-2
   account_id: ''
