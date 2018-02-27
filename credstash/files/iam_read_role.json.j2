@@ -1,18 +1,20 @@
+{%- from "credstash/map.jinja" import credstash with context -%}
+{%- from "credstash/map.jinja" import aws with context -%}
 {
-    "role_name": "{{ iam_read["role_name"] }}",
+    "role_name": "{{ credstash.iam_read.role_name }}",
     "description": "Role used to read credstash secrets",
     "assume_role_policy_document": {
         "Version": "2012-10-17",
         "Statement": {
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::{{ account_id }}:root",
+                "AWS": "arn:aws:iam::{{ aws.account_id }}:root",
                 "Service": "lambda.amazonaws.com"
             },
             "Action": "sts:AssumeRole"
         }
     },
-    "attach_policy_name": "{{ iam_read["policy_name"] }}",
+    "attach_policy_name": "{{ credstash.iam_read.policy_name }}",
     "attach_policy_description": "Policy used to read credstash secrets",
     "attach_policy_document": {
         "Version": "2012-10-17",
@@ -22,7 +24,7 @@
                     "kms:Decrypt"
                 ],
                 "Effect": "Allow",
-                "Resource": "lookup:kms:alias/{{ kms_alias }}"
+                "Resource": "lookup:kms:alias/{{ credstash.kms_alias }}"
             },
             {
                 "Action": [
@@ -31,9 +33,9 @@
                     "dynamodb:Scan"
                 ],
                 "Effect": "Allow",
-                "Resource": "arn:aws:dynamodb:{{ region }}:{{ account_id }}:table/{{ table_name }}"
+                "Resource": "arn:aws:dynamodb:{{ aws.region }}:{{ aws.account_id }}:table/{{ credstash.table_name }}"
             }
         ]
     },
-    "region": "{{ region }}"
+    "region": "{{ aws.region }}"
 }

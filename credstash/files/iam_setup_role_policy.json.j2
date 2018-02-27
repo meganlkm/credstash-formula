@@ -1,9 +1,10 @@
+{%- from "credstash/map.jinja" import aws with context -%}
 {
     "Version": "2012-10-17",
     "Statement": {
         "Effect": "Allow",
         "Principal": {
-            "AWS": "arn:aws:iam::{{ account_id }}:root"
+            "AWS": "arn:aws:iam::{{ aws.account_id }}:root"
         },
         "Action": "sts:AssumeRole"
     }
