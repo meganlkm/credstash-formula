@@ -47,10 +47,10 @@ See the full Salt Formulas installation and usage instructions
   - Delete IAM role: `credstash-read-role`
   - Delete KMS key
   - Delete DynamoDB table
-* Salt State: `put-secret`
-* Salt State: `get-secret`
-* Salt State: `delete-secret`
-* Salt State: `list-secrets`
+* Salt State: `put`
+* Salt State: `get`
+* Salt State: `delete`
+* Salt State: `list`
 * Salt State: `keys`
 
 
@@ -96,15 +96,45 @@ make setup
 
 ## <a name='states'></a> Available States
 
-### `credstash`
+### init
+
+Apply the following states:
+
+* `credstash.setup`
+
+#### `credstash.setup`
 
 Install credstash and its dependencies.
 Create the AWS objects required to run credstash.
 
+#### `credstash.destroy`
+
+Delete credstash and its dependencies including AWS objects.
+
+#### `credstash.put`
+
+Add or update a secret in credstash
+
+#### `credstash.get`
+
+Get a secret from credstash
+
+#### `credstash.delete`
+
+Delete a secret in credstash
+
+#### `credstash.list`
+
+List all secrets in credstash
+
+#### `credstash.keys`
+
+List all credstash keys
+
 
 ## <a name='pillar'></a> Pillar Customizations
 
-Any of these values can be overwritten in a pillar file. If you do find yourself needing
-more overrides follow the example below.
+Any of these values can be overwritten in a pillar file.
+If you do find yourself needing more overrides follow the example below.
 
-[pillar.example](authconfig/tests/pillar/authconfig/init.sls)
+[pillar defaults](credstash/defaults.yaml)

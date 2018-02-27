@@ -1,6 +1,5 @@
+aws:
+  region: us-east-2
+  account_id: ''
 credstash:
-{% if grains['os_family'] == 'RedHat' %}
-  package: vim-enhanced
-{% else %}
-  package: vim
-{% endif %}
+  table_name: credential-store
