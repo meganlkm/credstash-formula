@@ -1,0 +1,6 @@
+# Default lookup dictionary
+credstash:
+  aws:
+    region: us-east-2
+    account_id: ''
+  table_name: credential-store
