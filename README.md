@@ -2,21 +2,56 @@
 
 Formulas to set up and manage credstash.
 
+* [Flow](#flow)
 * [Testing](#testing)
 * [Available States](#states)
 * [Pillar Customizations](#pillar)
 
 ---
 
-**Note:**
+##### Status: Planning/Development
+
+##### Note:
 
 See the full Salt Formulas installation and usage instructions
 <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>.
 
-**Assumptions:**
+##### Assumptions:
 
 `make` is on your system and available. If it is not or you are not sure what
 `make` is, [this](https://www.gnu.org/software/make/) is a good place to start.
+
+---
+
+## <a name='flow'></a> Flow
+
+* Build container
+* Install dependencies
+  - `salt-aws-boto3` (_modules)
+  - `credstash`
+* Salt State: setup
+  - Create IAM policy: `credstash-setup-policy`
+  - Create IAM role: `credstash-setup-role`
+  - Create IAM policy: `credstash-write-policy`
+  - Create IAM role: `credstash-write-role`
+  - Create IAM policy: `credstash-read-policy`
+  - Create IAM role: `credstash-read-role`
+  - Create KMS key
+  - Run `credstash setup`
+* Salt State: destroy
+  - Delete IAM policy: `credstash-setup-policy`
+  - Delete IAM role: `credstash-setup-role`
+  - Delete IAM policy: `credstash-write-policy`
+  - Delete IAM role: `credstash-write-role`
+  - Delete IAM policy: `credstash-read-policy`
+  - Delete IAM role: `credstash-read-role`
+  - Delete KMS key
+  - Delete DynamoDB table
+* Salt State: `put-secret`
+* Salt State: `get-secret`
+* Salt State: `delete-secret`
+* Salt State: `list-secrets`
+* Salt State: `keys`
 
 
 ## <a name='testing'></a> Testing
