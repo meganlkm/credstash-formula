@@ -1,0 +1,13 @@
+{% import_yaml "credstash/defaults.yaml" as defaults %}
+{% import_yaml "credstash/osmap.yaml" as osmap %}
+
+{% set credstash = salt['grains.filter_by'](
+  defaults,
+  merge=salt['grains.filter_by'](
+        osmap,
+        grain='os_family',
+        merge=salt['pillar.get']('credstash', {}),
+    ),
+  base = 'credstash',
+)
+%}

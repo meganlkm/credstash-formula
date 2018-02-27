@@ -36,7 +36,6 @@ endef
 setup:
 	pip install Jinja2
 
-
 clean:
 	find . -name '*.pyc' -exec rm '{}' ';'
 	rm -rf Dockerfile.*
@@ -50,6 +49,16 @@ clean:
 	# docker rmi --force $(IMAGE_NAME)
 	# rm -rf .dependencies
 	# rm -rf salt/_modules
+
+sandbox: clean
+	docker pull simplyadrian/allsalt:debian_master_2017.7.2
+	docker run --rm -d \
+		-v ${PWD}/credstash:/srv/salt/credstash \
+		-v ${PWD}:/opt/credstash-formula \
+		-h sandbox-salt-master \
+		--name sandbox-salt-master \
+		simplyadrian/allsalt:debian_master_2017.7.2
+	# docker exec -it sandbox-salt-master bash
 
 
 # --- centos_master_2017.7.2 ------------------------------------
@@ -115,7 +124,6 @@ sync-mods:
 
 ssh:
 	docker exec -it $(docker_ps) bash
-
 
 %:
     @:
