@@ -139,4 +139,4 @@ List all credstash keys
 Any of these values can be overwritten in a pillar file.
 If you do find yourself needing more overrides follow the example below.
 
-[pillar defaults](credstash/defaults.yaml)
+[pillar defaults](credstash/defaults.yml)

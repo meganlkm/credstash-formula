@@ -4,3 +4,6 @@ aws:
   account_id: ''
 credstash:
   table_name: credential-store
+  iam_setup:
+    policy_name: credstash-setup-policy
+    role_name: credstash-setup-role
