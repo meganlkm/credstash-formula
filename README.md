@@ -26,9 +26,9 @@ See the full Salt Formulas installation and usage instructions
 ## <a name='flow'></a> Flow
 
 * Build container
-* Install dependencies
-  - `salt-aws-boto3` (_modules)
-  - `credstash`
+  - Install dependencies
+    * `salt-aws-boto3` ***Note:*** add to _modules
+    * `credstash`
 * Salt State: setup
   - Create IAM policy: `credstash-setup-policy`
   - Create IAM role: `credstash-setup-role`
