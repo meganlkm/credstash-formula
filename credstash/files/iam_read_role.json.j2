@@ -1,5 +1,5 @@
-{%- from "credstash/map.j2" import credstash with context -%}
-{%- from "credstash/map.j2" import aws with context -%}
+{%- from "credstash/map.jinja" import credstash with context -%}
+{%- from "credstash/map.jinja" import aws with context -%}
 {
     "role_name": "{{ credstash.iam_read.role_name }}",
     "description": "Role used to read credstash secrets",
