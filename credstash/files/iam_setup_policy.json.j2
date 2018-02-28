@@ -1,0 +1,46 @@
+{%- from "credstash/map.j2" import credstash with context -%}
+{%- from "credstash/map.j2" import aws with context -%}
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:CreatePolicy",
+                "iam:CreateRole",
+                "iam:ListRoles",
+                "iam:ListPolicies",
+                "iam:ListAttachedRolePolicies"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "kms:CreateAlias",
+                "kms:CreateGrant",
+                "kms:CreateKey",
+                "kms:ListAliases",
+                "kms:ListKeys",
+                "kms:PutKeyPolicy"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "dynamodb:CreateTable",
+                "dynamodb:DescribeTable"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:dynamodb:{{ aws.region }}:{{ aws.account_id }}:table/{{ credstash.table_name }}"
+        },
+        {
+            "Action": [
+                "dynamodb:ListTables"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
