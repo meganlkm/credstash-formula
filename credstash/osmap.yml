@@ -5,6 +5,7 @@ Debian:
     - libffi-dev
     - python-dev
     - python-pip
+    - python-setuptools
 
 RedHat:
   packages:

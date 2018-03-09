@@ -28,6 +28,9 @@ define run_sandbox
 	docker run --rm -d \
 		-v ${PWD}/credstash:/srv/salt/credstash \
 		-v ${PWD}:/opt/credstash-formula \
+		-e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
+		-e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
+		-e "AWS_REGION=${AWS_REGION}" \
 		-h sandbox-salt-master-$(1) \
 		--name sandbox-salt-master-$(1) \
 		simplyadrian/allsalt:$(1)
